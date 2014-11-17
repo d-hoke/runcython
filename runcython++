@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 runcython++ () {
-    cython $1 --cplus $2
+    if [ `echo $1 | sed -n '/\.pyx/p' | wc -l` == 1 ]; then
+        cython $1 --cplus $2
+    else
+        echo 'Usage: runcython++ sourcefile.pyx "<cython-options>" "<g++-options>"'
+        exit
+    fi
     local tmpdir=`mktemp -d`
-    local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
-    local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
-    local C_NAME=`echo $1 | sed -e 's/\.pyx$/.cpp/'`
-    g++ -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python2.7 -o $SO_NAME $C_NAME $3 && \
+    trap "rm -r $tmpdir" 0
+    local BASE_NAME=`echo $1 | sed -e 's/\.pyx\?$//'`
+    local SO_NAME=`echo $1 | sed -e 's/\.pyx\?$/.so/'`
+    local C_NAME=`echo $1 | sed -e 's/\.pyx\?$/.cpp/'`
+    g++ -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
     rm $C_NAME && \
     mv $SO_NAME $tmpdir && \
     PYTHONPATH=$tmpdir:$PYTHONPATH python -c "import $BASE_NAME"
