@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+makecython++ () {
+    cython $1 --cplus $2
+    local tmpdir=`mktemp -d`
+    local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
+    local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
+    local C_NAME=`echo $1 | sed -e 's/\.pyx$/.cpp/'`
+    g++ -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing -I/usr/include/python2.7 -o $SO_NAME $C_NAME $3 && \
+    rm $C_NAME
+}
+
+makecython++ "$@"
