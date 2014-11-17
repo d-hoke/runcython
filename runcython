@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 runcython () {
-    if [ `echo $1 | sed -n '/\.pyx/p' | wc -l` == 1 ]; then
-        cython $1 $2
+    if [ `echo $1 | sed -n '/\.pyx\?/p' | wc -l` == 1 ]; then
+        cython $1 --embed $2
     else
         echo 'Usage: runcython sourcefile.pyx "<cython-options>" "<gcc-options>"'
         exit
@@ -9,12 +9,11 @@ runcython () {
     local tmpdir=`mktemp -d`
     trap "rm -r $tmpdir" 0
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx\?$//'`
-    local SO_NAME=`echo $1 | sed -e 's/\.pyx\?$/.so/'`
     local C_NAME=`echo $1 | sed -e 's/\.pyx\?$/.c/'`
-    gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
+    gcc -pthread -fwrapv -O2 -Wall -fno-strict-aliasing -o a.out $C_NAME $3 `pkg-config python --libs --cflags` && \
     rm $C_NAME && \
-    mv $SO_NAME $tmpdir && \
-    PYTHONPATH=$tmpdir:$PYTHONPATH python -c "import $BASE_NAME"
+    mv a.out $tmpdir && \
+    PYTHONPATH=`dirname $1`:$PYTHONPATH $tmpdir/a.out
 }
 
 runcython "$@"
