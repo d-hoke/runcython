@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
 runcython () {
-    if [ `echo $1 | sed -n '/\.pyx\?/p' | wc -l` == 1 ]; then
-        cython $1 --embed $2
-    else
-        echo 'Usage: runcython sourcefile.pyx "<cython-options>" "<gcc-options>"'
-        exit
-    fi
+    local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
     local tmpdir=`mktemp -d`
     trap "rm -r $tmpdir" 0
-    local BASE_NAME=`echo $1 | sed -e 's/\.pyx\?$//'`
-    local C_NAME=`echo $1 | sed -e 's/\.pyx\?$/.c/'`
-    gcc -pthread -fwrapv -O2 -Wall -fno-strict-aliasing -o a.out $C_NAME $3 `pkg-config python --libs --cflags` && \
-    rm $C_NAME && \
-    mv a.out $tmpdir && \
-    PYTHONPATH=`dirname $1`:$PYTHONPATH $tmpdir/a.out
+
+    makecython "$@" && \
+    mv $SO_NAME $tmpdir && \
+    PYTHONPATH=$tmpdir:$PYTHONPATH python -c "import $BASE_NAME"
 }
 
 runcython "$@"
