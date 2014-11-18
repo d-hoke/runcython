@@ -9,7 +9,7 @@ runcython++ () {
     local tmpdir=`mktemp -d`
     trap "rm -r $tmpdir" 0
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx\?$//'`
-    local C_NAME=`echo $1 | sed -e 's/\.pyx\?$/.c/'`
+    local C_NAME=`echo $1 | sed -e 's/\.pyx\?$/.cpp/'`
     g++ -pthread -fwrapv -O2 -Wall -fno-strict-aliasing -o a.out $C_NAME $3 `pkg-config python --libs --cflags` && \
     rm $C_NAME && \
     mv a.out $tmpdir && \
