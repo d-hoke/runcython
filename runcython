@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 runcython () {
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
+    local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
     local tmpdir=`mktemp -d`
     trap "rm -r $tmpdir" 0
 
