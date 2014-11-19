@@ -78,7 +78,9 @@ runcython lets you compile and run cython in one line
     primes.pyx primes.html
     $ firefox primes.html
     # firefox will show us the areas that have been sped up
-    
+
+<h2> Binding cuda kernels with runcython </h2>
+
   To convince you that `runcython` really does scale to rather complex build processes, here's a pipeline I built recently to call cuda kernels directly using `runcython++` (used when calling c++):
   
     // kernel.h
