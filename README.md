@@ -25,7 +25,7 @@ runcython lets you compile and run cython in one line
     $ runcython accum.pyx
     49995000
     
-  There's no need to muck around with distutils or intermediate files. Using cython the typical way would require creating 5 distinct files, `accum.pyx`, `accum.c`, `accum.so`, `setup.py`, and `use.py`. That's a lot of moving parts to keep track of. `runcython` keeps things simple so that you can just focus on writing fast code. If you want to output a module for use in your other python files, you can always use `makecython instead`
+  There's no need to muck around with distutils or intermediate files. Using cython the typical way would require creating 5 distinct files, `accum.pyx`, `accum.c`, `accum.so`, `setup.py`, and `use.py`. That's a lot of moving parts to keep track of. `runcython` keeps things simple so that you can just focus on writing fast code. If you want to output a module for use in your other python files, you can always use `makecython` instead:
   
     # primes.pyx
     def primes(int kmax):
@@ -53,7 +53,7 @@ runcython lets you compile and run cython in one line
     $ python -c 'import primes; print primes.primes(10)'
     [2, 3, 5, 7, 11, 13, 17, 23, 29]
     
-  Of course, none of this would be any better than `pyximport` if it didn't work for complex cython builds with lots of dependencies. But runcython let's you handle complex builds by giving 2 extra arguments, one for passing additional flags to `cython file.pyx ...`, and one for passing additional flags to `gcc a.c ...`. Lets see how this works for calling a c file:
+  Of course, none of this would be any better than `pyximport` if it didn't work for complex cython builds with lots of dependencies. But unlike pyximport, runcython doesn't force you to adopt an entirely new strategy for complex builds. You get 2 extra arguments to runcython, one for passing additional flags to `cython file.pyx ...`, and one for passing additional flags to `gcc a.c ...`. Lets see how this works for calling a c file:
   
     # square.c
     int square(int x) {
