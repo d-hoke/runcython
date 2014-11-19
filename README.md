@@ -12,7 +12,7 @@ runcython lets you compile and run cython in one line
     $ runcython hello.pyx
     hello, world
     
-  You can use `runcython file.pyx` just like you would use `python file.py`. The difference is of course that `runcython` will run a file with arbitrary cython code.
+  You can use `runcython file.pyx` just like you would use `python file.py`. The difference is that `runcython` will run a file with arbitrary cython code.
   
     # accum.pyx
     cdef int i, n, accum
