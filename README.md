@@ -66,9 +66,9 @@ runcython lets you compile and run cython in one line
     cdef extern int square(int)
     print square(5)
   
-  Now we'll need gcc to compile `square.c` along with `use_square.c`, so we can do 
+  Now if we don't add any extra parameters, `runcython use_square.pyx` will first run `cython use_square.pyx` to produce `use_square.c`, and call `gcc -shared -fPIC use_square.c -o use_square.so` to produce `use_square.so`. But we need to tell gcc that it should also compile the `square.c` file. Doing this just requres tagging on `square.c` to the gcc command, giving `gcc -shared -fPIC use_square.c -o use_square.so square.c`. To tell runcython to do this, we just tell it to add the string `"square.c"` to the end of the gcc command:
   
-    $ runcython square.pyx "" " square.c"
+    $ runcython square.pyx "" "square.c"
     25
   
   On the other hand, if we want to pass special flags to cython, such as perhaps `-a`, which tells cython to tell us which lines of the files are cython optimized, and which are regular python code, we can do that for the above `primes.pyx`:
