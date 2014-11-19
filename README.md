@@ -81,7 +81,7 @@ runcython lets you compile and run cython in one line
 
 <h2> Binding cuda kernels with runcython </h2>
 
-  To convince you that `runcython` really does scale to rather complex build processes, here's a pipeline I built recently to call cuda kernels directly using `runcython++` (used when calling c++):
+  To convince you that `runcython` really does scale to rather complex build processes, here's a pipeline I built recently to call cuda kernels directly using `runcython++`. Note that runcython++ is just like runcython, but using g++ for compilation rather than gcc:
   
     // kernel.h
     #define N 16
