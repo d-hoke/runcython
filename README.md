@@ -77,8 +77,127 @@ runcython lets you compile and run cython in one line
     $ firefox primes.html
     # firefox will show us the areas that have been sped up
     
+  To convince you that `runcython` really does scale to rather complex build processes, here's a pipeline I built recently to call cuda kernels directly using `runcython++` (used when calling c++):
   
+    // kernel.h
+    #define N 16
+    void cscan(float* hostArray);
+    
+  kernel.h declares a simple interface to a cuda kernel that will take an array of floats and return an array of the partial sums. This is a great parallel primitive that would be nice to do on a GPU if it were an important part of your computation. The kernel itself is defined with `kernel.cu`.
+  
+    // kernel.cu
+    #include "kernel.h"
+    __global__ void scan(float *g_odata, float *g_idata, int n)  {
+        extern __shared__ float temp[]; // allocated on invocation  
+        int thid = threadIdx.x;
+        int pout = 0, pin = 1;
+        // Load input into shared memory.  
+        // This is exclusive scan, so shift right by one  
+        // and set first element to 0  
+        temp[pout*n + thid] = (thid > 0) ? g_idata[thid-1] : 0;
+        __syncthreads();
+        for (int offset = 1; offset < n; offset *= 2)
+        {
+            pout = 1 - pout; // swap double buffer indices
+            pin = 1 - pout;
+            if (thid >= offset) {
+              temp[pout*n+thid] = temp[pin*n+thid - offset] + temp[pin*n+thid];
+            } else {
+              temp[pout*n+thid] = temp[pin*n+thid];
+            }
+            __syncthreads();
+        }
+        g_odata[thid] = temp[pout*n+thid]; // write output
+    }
+    
+    void cscan(float* hostArray)
+    {
+        float* deviceArray;
+        float* deviceArrayOut;
+        const float zero = 0.0f;
+        const int arrayLength = N;
+        const unsigned int memSize = sizeof(float) * arrayLength;
+    
+        cudaMalloc((void**) &deviceArray, memSize);
+        cudaMalloc((void**) &deviceArrayOut, memSize);
+        cudaMemset( deviceArray, zero, memSize);
+        cudaMemset( deviceArrayOut, zero, memSize);
+    
+        cudaMemcpy(deviceArray, hostArray, memSize, cudaMemcpyHostToDevice);
+        scan <<< 1, N, 32 >>> (deviceArrayOut, deviceArray, N);
+        cudaMemcpy(hostArray, deviceArrayOut, memSize, cudaMemcpyDeviceToHost);
     
     
+        cudaFree(deviceArrayOut);
+        cudaFree(deviceArray);
     
+        return;
+    }
+
+  Finally, we're going to wrap this `cscan` function using cython with the following code:
+  
+    # use_kernel.pyx
+    from libc.stdlib cimport malloc, free
+
+    cdef extern from "kernel.h":
+        void cscan(float*)
     
+    def main():
+        cdef int number = 16
+        cdef float *my_array = <float *>malloc(number * sizeof(float))
+        print "before"
+        for x in range(number):
+            my_array[x] = x**2
+            print my_array[x]
+        cscan(my_array)
+        print "after"
+        for x in range(number):
+            print my_array[x]
+    
+    main()
+
+  To compile, first we need to turn the cuda code c++ object code:
+  
+    $ nvcc -c kernel.cu  --shared --compiler-options '-fPIC' -o kernel.o
+    
+  The results are stored in `kernel.o`, which we would normall call from c++ with
+  
+    $ g++ use_kernel.cpp kernel.o -L/usr/local/cuda-5.5/lib64 -lcudart
+    
+  Hence, we just need to pass the equivalent flags to runcython++, and we'll get what we want
+  
+    $ runcython++ user_kernel.pyx "" "kernel.o -L/usr/local/cuda-5.5/lib64 -lcudart"
+    before
+    0.0
+    1.0
+    4.0
+    9.0
+    16.0
+    25.0
+    36.0
+    49.0
+    64.0
+    81.0
+    100.0
+    121.0
+    144.0
+    169.0
+    196.0
+    225.0
+    after
+    0.0
+    0.0
+    1.0
+    5.0
+    14.0
+    30.0
+    55.0
+    91.0
+    140.0
+    204.0
+    285.0
+    385.0
+    506.0
+    650.0
+    819.0
+    1015.0
