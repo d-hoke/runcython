@@ -53,6 +53,8 @@ runcython lets you compile and run cython in one line
     $ python -c 'import primes; print primes.primes(10)'
     [2, 3, 5, 7, 11, 13, 17, 23, 29]
     
+<h2> Advanced Usage </h2>
+
   Of course, none of this would be much better than the pyximport tool if it didn't work for complex cython builds with lots of dependencies. But unlike pyximport, runcython doesn't force you to adopt an entirely new strategy for complex builds. You get 2 extra arguments to runcython, one for passing additional flags to `cython file.pyx ...`, and one for passing additional flags to `gcc a.c ...`. Lets see how this works for calling a c file:
   
     # square.c
