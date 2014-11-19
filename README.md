@@ -1,4 +1,4 @@
-runcython lets you compile and run cython in one line. Currently it supports Linux only (Mac support is coming).
+runcython lets you compile and run cython in one line. Currently it supports Linux only (Mac support may be coming).
 
 <h2>Installation</h2>
 
