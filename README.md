@@ -12,7 +12,7 @@ runcython lets you compile and run cython in one line
     $ runcython hello.pyx
     hello, world
     
-  You can use `runcython file.pyx` just like you would use `python file.py`. The difference is that `runcython` will run a file with arbitrary cython code.
+  You can use `runcython file.pyx` just like you would use `python file.py`. The difference is that runcython will run a file with arbitrary cython code.
   
     # accum.pyx
     cdef int i, n, accum
@@ -66,7 +66,7 @@ runcython lets you compile and run cython in one line
     cdef extern int square(int)
     print square(5)
   
-  Now if we don't add any extra parameters, `runcython use_square.pyx` will first run `cython use_square.pyx` to produce `use_square.c`, and call `gcc -shared -fPIC use_square.c -o use_square.so` to produce use_square.so. But we need to tell gcc that it should also compile the square.c file. Doing this just requres tagging on square.c to the gcc command, giving `gcc -shared -fPIC use_square.c -o use_square.so square.c`. To tell runcython to do this, we just tell it to add the string "square.c" to the end of the gcc command:
+  Now if we don't add any extra parameters, `runcython use_square.pyx` will first run `cython use_square.pyx` to produce use_square.c, and call `gcc -shared -fPIC use_square.c -o use_square.so` to produce use_square.so. But we need to tell gcc that it should also compile the square.c file. Doing this just requres tagging on square.c to the gcc command, giving `gcc -shared -fPIC use_square.c -o use_square.so square.c`. To tell runcython to do this, we just tell it to add the string "square.c" to the end of the gcc command:
   
     $ runcython square.pyx "" "square.c"
     25
