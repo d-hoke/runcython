@@ -156,7 +156,7 @@ runcython lets you compile and run cython in one line
     
     main()
 
-  To compile, first we need to turn the cuda code c++ object code:
+  To compile, first we need to turn the cuda code into c++ object code:
   
     $ nvcc -c kernel.cu  --shared --compiler-options '-fPIC' -o kernel.o
     
