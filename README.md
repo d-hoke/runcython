@@ -66,7 +66,7 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
     $ python -c 'import primes; print primes.primes(10)'
     [2, 3, 5, 7, 11, 13, 17, 23, 29]
     
-Note that the `main()` function above in primes.pyx is not called when we import the primes.so module. Unlike makecython, runcython will call the main() function in your .pyx file if it exists. This is the equivalent of the `if __name__ == '__main__': main()` convention used in python programs:
+Note that the `main()` function above in primes.pyx is not called when we import the primes.so module. Unlike makecython, runcython will call the `main()` function in your *.pyx file if it exists. This is the equivalent of the `if __name__ == '__main__': main()` convention used in python programs:
 
     $ runcython primes.pyx
     [2, 3, 5, 7, 11]
