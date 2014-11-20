@@ -168,7 +168,7 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
   
     $ nvcc -c kernel.cu  --shared --compiler-options '-fPIC' -o kernel.o
     
-  The results are stored in `kernel.o`, which we would normall call from c++ with
+  The results are stored in `kernel.o`, which we would normally call from c++ with
   
     $ g++ use_kernel.cpp kernel.o -L/usr/local/cuda-5.5/lib64 -lcudart
     
