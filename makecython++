@@ -9,7 +9,7 @@ makecython++ () {
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
     local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
     local CPP_NAME=`echo $1 | sed -e 's/\.pyx$/.cpp/'`
-    g++ -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $CPP_NAME $3 && \
+    g++ -shared -pthread -fPIC -fwrapv -O2 -Wall -Wno-unused-function -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $CPP_NAME $3 && \
     rm $CPP_NAME
 }
 

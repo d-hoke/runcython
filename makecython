@@ -9,7 +9,7 @@ makecython () {
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
     local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
     local C_NAME=`echo $1 | sed -e 's/\.pyx$/.c/'`
-    gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
+    gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -Wno-unused-function -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
     rm $C_NAME
 }
 
