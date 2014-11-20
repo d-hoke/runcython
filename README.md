@@ -1,8 +1,12 @@
-runcython lets you compile and run cython in one line. Currently it supports Linux only (Mac support may be coming).
+runcython lets you compile and run cython in one line. Mac and Linux are both supported.
 
 <h2>Installation</h2>
 
     pip install runcython
+
+For mac, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieved this by adding to my ~/.bashrc:
+
+    export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig
     
 <h2>Usage</h2>
 
