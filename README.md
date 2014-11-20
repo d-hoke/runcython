@@ -12,7 +12,9 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
 
     # hello.pyx
     print 'hello, world'
-  
+
+<p></p>
+
     $ runcython hello.pyx
     hello, world
     
