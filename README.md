@@ -54,6 +54,9 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
                 result.append(n)
             n = n + 1
         return result
+    
+    def main():
+        print primes(5)
 
 <p></p>
 
@@ -63,6 +66,11 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
     $ python -c 'import primes; print primes.primes(10)'
     [2, 3, 5, 7, 11, 13, 17, 23, 29]
     
+Note that the `main()` function above in primes.pyx is not called when we import the primes.so module. Unlike makecython, runcython will call the main() function in your .pyx file if it exists. This is the equivalent of the `if __name__ == '__main__': main()` convention used in python programs:
+
+    $ runcython primes.pyx
+    [2, 3, 5, 7, 11]
+
 <h2> Advanced Usage </h2>
 
   Of course, none of this would be much better than the pyximport tool if it didn't work for complex cython builds with lots of dependencies. But unlike pyximport, runcython doesn't force you to adopt an entirely new strategy for complex builds. You get 2 extra arguments to runcython, one for passing additional flags to `cython file.pyx ...`, and one for passing additional flags to `gcc a.c ...`. Lets see how this works for calling a c file:
