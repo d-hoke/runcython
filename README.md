@@ -1,4 +1,4 @@
-Cython is a superset of python that adds support for blazing fast c funcitons. runcython lets you compile and run cython files in one line. OSX and Linux are supported.
+Cython is a superset of python that adds support for blazing fast c funcitons. Runcython lets you compile and run cython files in one line. OSX and Linux are supported.
 
 <h2>Installation</h2>
 
