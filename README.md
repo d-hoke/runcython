@@ -165,19 +165,16 @@ Note that the `main()` function above in primes.pyx is not called when we import
         void cscan(float*)
     
     def main():
-        cdef int number = 16
-        cdef float *my_array = <float *>malloc(number * sizeof(float))
+        cdef int N = 16
+        cdef float *my_array = <float *>malloc(N * sizeof(float))
         print "before"
-        for x in range(number):
+        for x in range(N):
             my_array[x] = x**2
-            print my_array[x]
+        print [my_array[x] for x in range(N)]
         cscan(my_array)
         print "after"
-        for x in range(number):
-            print my_array[x]
+        print [my_array[x] for x in range(N)]
     
-    main()
-
   To compile, first we need to turn the cuda code into c++ object code:
   
     $ nvcc -c kernel.cu  --shared --compiler-options '-fPIC' -o kernel.o
@@ -190,36 +187,6 @@ Note that the `main()` function above in primes.pyx is not called when we import
   
     $ runcython++ user_kernel.pyx "" "kernel.o -L/usr/local/cuda-5.5/lib64 -lcudart"
     before
-    0.0
-    1.0
-    4.0
-    9.0
-    16.0
-    25.0
-    36.0
-    49.0
-    64.0
-    81.0
-    100.0
-    121.0
-    144.0
-    169.0
-    196.0
-    225.0
+    [0.0, 1.0, 4.0, 9.0, 16.0, 25.0, 36.0, 49.0, 64.0, 81.0, 100.0, 121.0, 144.0, 169.0, 196.0, 225.0]
     after
-    0.0
-    0.0
-    1.0
-    5.0
-    14.0
-    30.0
-    55.0
-    91.0
-    140.0
-    204.0
-    285.0
-    385.0
-    506.0
-    650.0
-    819.0
-    1015.0
+    [0.0, 0.0, 1.0, 5.0, 14.0, 30.0, 55.0, 91.0, 140.0, 204.0, 285.0, 385.0, 506.0, 650.0, 819.0, 1015.0]
