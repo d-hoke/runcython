@@ -27,7 +27,9 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
     for i in range(n):
         accum += i
     print i
-  
+
+<p></p>
+
     $ runcython accum.pyx
     49995000
     
@@ -52,7 +54,9 @@ For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieve
                 result.append(n)
             n = n + 1
         return result
-    
+
+<p></p>
+
     $ makecython primes.pyx
     $ ls
     primes.pyx primes.so
