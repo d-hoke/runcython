@@ -5,7 +5,7 @@ import sys
 
 setup(
     name='runcython',
-    version='0.1.9',
+    version='0.2.0',
     description='compile and run cython in one line',
     license='MIT',
     url='https://github.com/Russell91/runcython',
