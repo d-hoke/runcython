@@ -4,7 +4,7 @@ Cython is a superset of python that adds support for blazing fast c/c++ function
 
     pip install runcython
 
-For OSX, make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieved this by adding `export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig` to my ~/.bashrc.
+If you use OSX, you'll have to make sure that the file python.pc is on your PKG_CONFIG_PATH. I achieved this by adding `export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig` to my ~/.bashrc.
     
 <h2>Usage</h2>
 
