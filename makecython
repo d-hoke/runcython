@@ -4,7 +4,7 @@ makecython () {
         cython $1 $2
     else
         echo 'Usage: makecython sourcefile.pyx "<cython-options>" "<gcc-options>"' 1>&2
-        exit
+        exit 1
     fi
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
     local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
