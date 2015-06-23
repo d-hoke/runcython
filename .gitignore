@@ -2,3 +2,4 @@ build/*
 dist/*
 runcython.egg-info/*
 *.swp
+LICENCE.txt
