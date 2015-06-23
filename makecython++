@@ -3,7 +3,8 @@ makecython++ () {
     if [ `echo $1 | sed -n '/\.pyx/p' | wc -l` == 1 ]; then
         cython $1 --cplus $2
     else
-        echo 'Usage: makecython++ sourcefile.pyx "<cython-options>" "<gcc-options>"' 1>&2
+        echo 'makecython++ requires a *.pyx file.
+Usage: makecython++ sourcefile.pyx "<cython-options>" "<gcc-options>"' 1>&2
         exit 1
     fi
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`

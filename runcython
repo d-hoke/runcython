@@ -4,7 +4,7 @@ runcython () {
     local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
     local tmpdir=`mktemp -d -t .runcython.XXX`
     if [ `ls | sed -n "/$BASE_NAME\.pyc\?$/p" | wc -l` -ge 1 ]; then
-        echo "ERROR: current directory contains python file of same name:" `ls | sed -n "/$BASE_NAME\.pyc\?$/p" | head -1` 1>&2
+        echo "ERROR: current directory contains a .py file of same name:" `ls | sed -n "/$BASE_NAME\.pyc\?$/p" | head -1` 1>&2
         exit
     fi
     trap "rm -r $tmpdir" 0
