@@ -1,15 +1,13 @@
-Cython is a superset of python that adds support for blazing fast c/c++ functions. Runcython lets you compile and run cython files in one line. OSX and Linux are supported.
+Cython is a superset of python that adds support for blazing fast c/c++ functions. In the standard cython build process, running `myprogram.py(x)` with cython requires creating `myprogram.c`, `setup.py`, `myprogram.so`, and `finally_use.py`. The popular `pyximport` tool reduces these 5 files down to 2, but is only designed to handle  simple builds, and must eventually be replaced with a `setup.py` build for any real project.
+
+Runcython aims to simplify this process without sacrificing scalability. To try out cython on any python program, `main.py`, just do:
+
+    $ mv main.py main.pyx && runcython main.pyx
 
 <h2>Installation</h2>
 
     pip install runcython
 
-<h4>Configuration for OSX</h4>
-python.pc is not on the PKG_CONFIG_PATH by default for OSX. I added
-<br/>
-`export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig`
-<br/>
-to my ~/.bashrc to solve this.
 <h2>Usage</h2>
 
     # hello.pyx
@@ -192,3 +190,10 @@ Note that the `main()` function above in primes.pyx is not called when we import
     [0.0, 1.0, 4.0, 9.0, 16.0, 25.0, 36.0, 49.0, 64.0, 81.0, 100.0, 121.0, 144.0, 169.0, 196.0, 225.0]
     after
     [0.0, 0.0, 1.0, 5.0, 14.0, 30.0, 55.0, 91.0, 140.0, 204.0, 285.0, 385.0, 506.0, 650.0, 819.0, 1015.0]
+
+<h4>Configuration for OSX</h4>
+python.pc is not on the PKG_CONFIG_PATH by default for OSX. I added
+<br/>
+`export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig`
+<br/>
+to my ~/.bashrc to solve this.
