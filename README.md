@@ -1,8 +1,12 @@
-Cython is a superset of python that adds support for blazing fast c/c++ functions. In the standard cython build process, running `myprogram.py(x)` with cython requires creating `myprogram.c`, `setup.py`, `myprogram.so`, and `finally_use.py`. The popular `pyximport` tool reduces these 5 files down to 2, but is only designed to handle  simple builds, and must eventually be replaced with a `setup.py` build for any real project.
+<h2> Motivation </h2>
 
-Runcython aims to simplify this process without sacrificing scalability. To try out cython on any python program, `main.py`, just do:
+Cython is a superset of python that adds support for blazing fast c/c++ functions. Runcython aims to simplify the process of using Cython without sacrificing scalability. To try out cython on any python program, `main.py`, just do:
 
     $ mv main.py main.pyx && runcython main.pyx
+
+In the standard cython build process, running `myprogram.py(x)` with cython requires creating `myprogram.c`, `setup.py`, `myprogram.so`, and `finally_use.py`. The popular `pyximport` tool reduces these 5 files down to 2, but is only designed to handle  simple builds, and must eventually be replaced with a `setup.py` build for any real project.
+
+
 
 <h2>Installation</h2>
 
