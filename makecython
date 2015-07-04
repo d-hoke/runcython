@@ -10,8 +10,12 @@ Usage: makecython sourcefile.pyx "<cython-options>" "<gcc-options>"' 1>&2
     local BASE_NAME=`echo $1 | sed -e 's/\.pyx$//'`
     local SO_NAME=`echo $1 | sed -e 's/\.pyx$/.so/'`
     local C_NAME=`echo $1 | sed -e 's/\.pyx$/.c/'`
+    local API_NAME=`echo $1 | sed -e 's/\.pyx$/_api.h/'`
+    local D_NAME=`echo $1 | sed -e 's/\.pyx$/.d/'`
     gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -Wno-unused-function -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
-    rm $C_NAME
+    rm $C_NAME && \
+    rm $API_NAME && \
+    rm $D_NAME
 }
 
 makecython "$@"
