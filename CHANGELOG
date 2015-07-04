@@ -1,0 +1,2 @@
+0.2.2
+makecython(++) was modified to additionally delete any auto-generated *.api_h and *.d files.
