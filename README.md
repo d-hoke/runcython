@@ -12,6 +12,7 @@ In the standard cython build process, running `myprogram.py(x)` with cython requ
 
     pip install runcython
 
+See details for <a href="#OSX">OSX/Redhat</a>, <a href="#Anaconda">Anaconda</a>, or <a href="#python3">python3</a>
 <h2>Usage</h2>
 
     # hello.pyx
@@ -195,9 +196,25 @@ Note that the `main()` function above in primes.pyx is not called when we import
     after
     [0.0, 0.0, 1.0, 5.0, 14.0, 30.0, 55.0, 91.0, 140.0, 204.0, 285.0, 385.0, 506.0, 650.0, 819.0, 1015.0]
 
+<h2>Additional installation instructions</h2>
+The folder containing python.pc must be on your PKG_CONFIG_PATH. python.pc tells gcc which version of python to compile against and where to find your Python.h header file.
+
+<a name="OSX"></a>
 <h4>Configuration for OSX</h4>
-python.pc is not on the PKG_CONFIG_PATH by default for OSX. I added
-<br/>
-`export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig`
-<br/>
-to my ~/.bashrc to solve this.
+Add the following to your ~/.bashrc:
+
+    export PKG_CONFIG_PATH=/System/Library/Frameworks/Python.framework/Versions/2.7/lib/pkgconfig:$PKG_CONFIG_PATH
+
+<a name="Anaconda"></a>
+<h4>Configuration for Anaconda</h4>
+Add the following to your ~/.bashrc:
+
+    export PKG_CONFIG_PATH=$HOME/anaconda/lib/pkgconfig:$PKG_CONFIG_PATH
+
+<a name="Ubuntu"></a>
+<h4>Configuration for Ubuntu</h4>
+Ubuntu should already have /usr/lib/x86_64-linux-gnu/pkgconfig/ on the PKG_CONFIG_PATH, which should contain python.pc.
+
+<a name="python3"></a>
+<h4>Configuration for python3</h4>
+Python3 users should use `pip install runcython3` instead. This will install runcython3(++) and makecython3(++) scripts. You will need to make sure the folder containing python3.pc to your PKG_CONFIG_PATH as above.
