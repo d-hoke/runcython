@@ -217,4 +217,4 @@ Ubuntu should already have /usr/lib/x86_64-linux-gnu/pkgconfig/ on the PKG_CONFI
 
 <a name="python3"></a>
 <h4>Configuration for python3</h4>
-Python3 users should use `pip install runcython3` instead. This will install runcython3(++) and makecython3(++) scripts. You will need to make sure the folder containing python3.pc to your PKG_CONFIG_PATH as above.
+Python3 users should use `pip install runcython3` instead. This will install runcython3(++) and makecython3(++) scripts. You will need to make sure the folder containing python3.pc is on your PKG_CONFIG_PATH.
