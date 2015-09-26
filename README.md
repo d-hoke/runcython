@@ -31,7 +31,7 @@ See details for <a href="#OSX">OSX/Redhat</a>, <a href="#Anaconda">Anaconda</a>,
     n = 10**4
     for i in range(n):
         accum += i
-    print i
+    print accum
 
 <p></p>
 
