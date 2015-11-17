@@ -1,6 +1,6 @@
 <h2> Motivation </h2>
 
-Cython is a superset of python that adds support for blazing fast c/c++ functions. Runcython aims to simplify the process of using Cython without sacrificing scalability. To try out cython on any python program, `main.py`, just do:
+Cython is a superset of python that adds support for blazing fast c/c++ functions. Runcython aims to simplify the process of using Cython. To try out cython on any python program, `main.py`, just do:
 
     $ mv main.py main.pyx && runcython main.pyx
 
