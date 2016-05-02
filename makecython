@@ -12,6 +12,7 @@ Usage: makecython sourcefile.pyx "<cython-options>" "<gcc-options>"' 1>&2
     local C_NAME=`echo $1 | sed -e 's/\.pyx$/.c/'`
     local API_NAME=`echo $1 | sed -e 's/\.pyx$/_api.h/'`
     local D_NAME=`echo $1 | sed -e 's/\.pyx$/.d/'`
+    export PKG_CONFIG_PATH=$(python -c 'import sys; import os; print(os.path.dirname(sys.executable) + "/../lib/pkgconfig")'):$PKG_CONFIG_PATH
     gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -Wno-unused-function -fno-strict-aliasing `pkg-config python --libs --cflags` -o $SO_NAME $C_NAME $3 && \
     rm $C_NAME && \
     rm -f $API_NAME && \
