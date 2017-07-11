@@ -14,7 +14,7 @@ runcython () {
     PYTHONPATH=$tmpdir:$PYTHONPATH python -c "
 import $BASE_NAME
 if hasattr($BASE_NAME, 'main'):
-    $BASE_NAME.main()"
+    $BASE_NAME.main()" "${@:4}"
 }
 
 runcython "$@"
