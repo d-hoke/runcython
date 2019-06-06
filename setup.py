@@ -10,6 +10,6 @@ setup(
     license='MIT',
     url='https://github.com/Russell91/runcython',
     long_description='https://github.com/Russell91/runcython',
-    install_requires='Cython>=0.10',
+    install_requires='Cython==0.29.9',
     scripts = ['runcython', 'runcython++', 'makecython', 'makecython++'],
 )
